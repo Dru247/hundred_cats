@@ -10,7 +10,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).parent
 URL = 'https://api.thecatapi.com/v1/images/search'
-CATS_DIR = CATS_DIR = BASE_DIR / 'cats'
+CATS_DIR = BASE_DIR / 'cats'
 PROXY_HOST = os.getenv('PROXY_HOST')
 PROXY_PORT = os.getenv('PROXY_PORT')
 PROXY_LOGIN = os.getenv('PROXY_LOGIN')
@@ -27,10 +27,10 @@ proxies = {
 
 
 def get_new_image_url() -> str:
-    """Возвращет URL фото нового котика."""
+    """Возвращает URL фото нового котика."""
     response = requests.get(
         url=URL,
-        proxies=proxies,
+        # proxies=proxies,
         timeout=REQUEST_TIMEOUT
     ).json()
     return response[0].get('url')
@@ -46,7 +46,7 @@ def download_file(url: str) -> None:
 
 
 def download_new_cat_image() -> None:
-    """Скачавает фото котика через URL."""
+    """Скачивает фото котика через URL."""
     url = get_new_image_url()
     download_file(url)
 
@@ -57,7 +57,7 @@ def create_dir(dir_name) -> None:
 
 
 def list_dir(dir_name) -> None:
-    """Печатает содержание дирректории."""
+    """Печатает содержание директории."""
     print(
         *os.listdir(dir_name),
         sep='\n'
@@ -65,7 +65,7 @@ def list_dir(dir_name) -> None:
 
 
 def main() -> None:
-    """Создаёт директориюи скачивает фото котиков."""
+    """Создаёт директорию и скачивает фото котиков."""
     create_dir(CATS_DIR)
     for _ in range(100):
         download_new_cat_image()
